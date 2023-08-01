@@ -7,9 +7,9 @@
 	branch = kirkstone
 [submodule "meta-riscv"]
 	path = meta-riscv
-	url = https://github.com/riscv/meta-riscv.git
+	url = https://github.com/toezi/meta-riscv.git
 	branch = kirkstone
 [submodule "meta-openembedded"]
 	path = meta-openembedded
-	url = https://github.com/openembedded/meta-openembedded.git
+	url = https://github.com/toezi/meta-openembedded.git
 	branch = kirkstone
