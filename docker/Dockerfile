@@ -17,8 +17,8 @@ ENV LC_ALL en_US.UTF-8
 
 ARG CACHEBUST=1
 ENV USER_NAME toezios
-ENV PROJECT  toeziOS
-ENV layer  toezios
+ENV PROJECT toeziOS
+ENV layer toezios
 
 ARG host_uid=1001
 ARG host_gid=1001
