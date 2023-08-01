@@ -15,9 +15,10 @@ RUN locale-gen en_US.UTF-8 && update-locale LC_ALL=en_US.UTF-8 \
 ENV LANG en_US.UTF-8
 ENV LC_ALL en_US.UTF-8
 
-
+ARG CACHEBUST=1
 ENV USER_NAME toezios
-ENV PROJECT  toezios
+ENV PROJECT  toeziOS
+ENV layer  toezios
 
 ARG host_uid=1001
 ARG host_gid=1001
@@ -30,11 +31,11 @@ ENV BUILD_INPUT_DIR /home/$USER_NAME/yocto/input
 ENV BUILD_OUTPUT_DIR /home/$USER_NAME/yocto/output
 RUN mkdir -p $BUILD_INPUT_DIR $BUILD_OUTPUT_DIR
 
-
+ARG CACHEBUST=1
 WORKDIR $BUILD_INPUT_DIR
 RUN git clone --recurse-submodules https://github.com/toezi/toeziOS.git
 
 WORKDIR $BUILD_OUTPUT_DIR
-ENV TEMPLATECONF=$BUILD_INPUT_DIR/$PROJECT/sources/meta-$PROJECT/custom
-CMD source $BUILD_INPUT_DIR/$PROJECT/sources/poky/oe-init-build-env \
-    build && bitbake $PROJECT-image
+ENV TEMPLATECONF=$BUILD_INPUT_DIR/$PROJECT/meta-$layer/custom
+CMD source $BUILD_INPUT_DIR/$PROJECT/poky/oe-init-build-env \
+    build && bitbake $layer-image

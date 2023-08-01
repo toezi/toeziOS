@@ -1,4 +1,4 @@
-docker build --no-cache --tag "toezi-image:latest" $PWD/docker/
+docker build --build-arg CACHEBUST=$(Get-Date) --tag "toezi-image:latest" $PWD/docker/
 
 mkdir -p $PWD/out -ErrorAction SilentlyContinue
 
