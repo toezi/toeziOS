@@ -32,7 +32,7 @@ RUN mkdir -p $BUILD_INPUT_DIR $BUILD_OUTPUT_DIR
 
 
 WORKDIR $BUILD_INPUT_DIR
-RUN git clone --recurse-submodules git@github.com:toezi/toeziOS.git
+RUN git clone --recurse-submodules https://github.com/toezi/toeziOS.git
 
 WORKDIR $BUILD_OUTPUT_DIR
 ENV TEMPLATECONF=$BUILD_INPUT_DIR/$PROJECT/sources/meta-$PROJECT/custom
