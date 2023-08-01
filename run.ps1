@@ -1,5 +1,5 @@
 docker build --no-cache --tag "toezi-image:latest" $PWD/docker/
 
-mdkir $PWD/out
+mkdir -p $PWD/out -ErrorAction SilentlyContinue
 
-docker run -it --rm -v $PWD/out:/home/visionfive_yocto/yocto/output  toezi-image:latest
+docker run -it --rm -v $PWD/out:/home/toezios/yocto/output  toezi-image:latest

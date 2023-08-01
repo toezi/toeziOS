@@ -16,8 +16,8 @@ ENV LANG en_US.UTF-8
 ENV LC_ALL en_US.UTF-8
 
 
-ENV USER_NAME visionfive_yocto
-ENV PROJECT  visionfive_yocto
+ENV USER_NAME toezios
+ENV PROJECT  toezios
 
 ARG host_uid=1001
 ARG host_gid=1001
@@ -32,7 +32,7 @@ RUN mkdir -p $BUILD_INPUT_DIR $BUILD_OUTPUT_DIR
 
 
 WORKDIR $BUILD_INPUT_DIR
-RUN git clone --recurse-submodules https://github.com/Toezi135/ToeziOS.git
+RUN git clone --recurse-submodules git@github.com:toezi/toeziOS.git
 
 WORKDIR $BUILD_OUTPUT_DIR
 ENV TEMPLATECONF=$BUILD_INPUT_DIR/$PROJECT/sources/meta-$PROJECT/custom

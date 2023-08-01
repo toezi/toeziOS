@@ -1,0 +1,11 @@
+[submodule "meta-toezios"]
+	path = meta-toezios
+	url = https://github.com/toezi/meta-toezios.git
+[submodule "poky"]
+	path = poky
+	url = https://github.com/toezi/poky.git
+	branch = kirkstone
+[submodule "meta-riscv"]
+	path = meta-riscv
+	url = https://github.com/riscv/meta-riscv.git
+	branch = kirkstone
