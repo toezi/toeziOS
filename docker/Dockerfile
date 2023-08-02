@@ -2,40 +2,41 @@ FROM ubuntu:20.04
 
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN apt-get update && apt-get  install -y --no-install-recommends gawk wget git-core \
-    diffstat unzip texinfo gcc-multilib build-essential \
-    chrpath socat cpio python python3 python3-pip \
-    python3-pexpect xz-utils debianutils iputils-ping \
-    libsdl1.2-dev xterm tar locales 
+RUN apt-get update && apt-get -y upgrade
 
-RUN rm /bin/sh && ln -s bash /bin/sh
+# Required Packages for the Host Development System
+# http://www.yoctoproject.org/docs/latest/mega-manual/mega-manual.html#required-packages-for-the-host-development-system
+RUN apt-get install -y gawk wget git-core diffstat unzip texinfo gcc-multilib \
+        build-essential chrpath socat cpio python3 python3-pip python3-pexpect python-is-python3 \
+        xz-utils debianutils iputils-ping python3-git python3-jinja2 libegl1-mesa libsdl1.2-dev \
+        pylint3 xterm
 
-RUN locale-gen en_US.UTF-8 && update-locale LC_ALL=en_US.UTF-8 \
-    LANG=en_US.UTF-8
-ENV LANG en_US.UTF-8
+# Additional host packages required by poky/scripts/wic
+RUN apt-get install -y curl dosfstools mtools parted syslinux tree zip
+
+# Create user "jenkins"
+RUN id jenkins 2>/dev/null || useradd --uid 1000 --create-home jenkins
+
+# Create a non-root user that will perform the actual build
+RUN id build 2>/dev/null || useradd --uid 30000 --create-home build
+RUN apt-get install -y sudo
+RUN echo "build ALL=(ALL) NOPASSWD: ALL" | tee -a /etc/sudoers
+
+# Fix error "Please use a locale setting which supports utf-8."
+# See https://wiki.yoctoproject.org/wiki/TipsAndTricks/ResolvingLocaleIssues
+RUN apt-get install -y locales
+RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
+        echo 'LANG="en_US.UTF-8"'>/etc/default/locale && \
+        dpkg-reconfigure --frontend=noninteractive locales && \
+        update-locale LANG=en_US.UTF-8
+
 ENV LC_ALL en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US.UTF-8
 
-ARG CACHEBUST=1
-ENV USER_NAME toezios
-ENV PROJECT toeziOS
-ENV layer toezios
 
-ARG host_uid=1001
-ARG host_gid=1001
-RUN groupadd -g $host_gid $USER_NAME && \
-    useradd -g $host_gid -m -s /bin/bash -u $host_uid $USER_NAME
+USER build
+WORKDIR /home/build
+CMD "/bin/bash"
 
-USER $USER_NAME
-
-ENV BUILD_INPUT_DIR /home/$USER_NAME/yocto/input
-ENV BUILD_OUTPUT_DIR /home/$USER_NAME/yocto/output
-RUN mkdir -p $BUILD_INPUT_DIR $BUILD_OUTPUT_DIR
-
-ARG CACHEBUST=1
-WORKDIR $BUILD_INPUT_DIR
-RUN git clone --recurse-submodules https://github.com/toezi/toeziOS.git
-
-WORKDIR $BUILD_OUTPUT_DIR
-ENV TEMPLATECONF=$BUILD_INPUT_DIR/$PROJECT/meta-$layer/custom
-CMD source $BUILD_INPUT_DIR/$PROJECT/poky/oe-init-build-env \
-    build && bitbake $layer-image
+# EOF

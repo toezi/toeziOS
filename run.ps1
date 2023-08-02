@@ -1,5 +1,11 @@
-docker build --no-cache --tag "toezi-image:latest" $PWD/docker/
+docker build --tag "toezi-image:latest" $PWD/docker/
 
 mkdir -p $PWD/out -ErrorAction SilentlyContinue
 
-docker run -it --rm -v $PWD/out:/home/toezios/yocto/output  toezi-image:latest
+docker run -it --rm `
+    -v $PWD/out:/home/build/output `
+    -v $PWD/docker:/home/build/start `
+    -u 30000:30000 `
+    toezi-image:latest `
+    
+    
