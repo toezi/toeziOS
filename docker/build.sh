@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 USER_NAME="build"
 PROJECT="toeziOS"
 LAYER="toezios"
@@ -16,4 +16,4 @@ export TEMPLATECONF
 
 
 source $BUILD_INPUT_DIR/$PROJECT/poky/oe-init-build-env \
-    build && bitbake $LAYER-image
+    && bitbake $LAYER-image
