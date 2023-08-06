@@ -9,7 +9,7 @@ RUN apt-get update && apt-get -y upgrade
 RUN apt-get install -y gawk wget git-core diffstat unzip texinfo gcc-multilib \
         build-essential chrpath socat cpio python3 python3-pip python3-pexpect python-is-python3 \
         xz-utils debianutils iputils-ping python3-git python3-jinja2 libegl1-mesa libsdl1.2-dev \
-        pylint3 xterm zstd
+        pylint3 xterm zstd lz4
 
 # Additional host packages required by poky/scripts/wic
 RUN apt-get install -y curl dosfstools mtools parted syslinux tree zip
@@ -37,6 +37,7 @@ ENV LANGUAGE en_US.UTF-8
 
 USER build
 WORKDIR /home/build
+RUN git clone --recurse-submodules https://github.com/toezi/toeziOS.git
 CMD "/bin/bash"
 
 # EOF

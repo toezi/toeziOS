@@ -1,4 +1,5 @@
 docker build --tag "toezi-image:latest" $PWD/docker/
+if (-not $?) {throw "Failed to doSomething"}
 
 mkdir -p $PWD/out -ErrorAction SilentlyContinue
 
