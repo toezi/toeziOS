@@ -3,7 +3,7 @@ USER_NAME="build"
 PROJECT="toeziOS"
 LAYER="toezios"
 
-BUILD_INPUT_DIR="/home/$USER_NAME/"
+BUILD_INPUT_DIR="/home/$USER_NAME"
 BUILD_OUTPUT_TMP_DIR="/home/$USER_NAME/output_tmp/"
 BUILD_OUTPUT_DIR="/home/$USER_NAME/output/"
 
@@ -13,14 +13,14 @@ cd $BUILD_INPUT_DIR/$PROJECT
 
 git pull --recurse-submodules
 
-rm -rf $BUILD_OUTPUT_TMP_DIR/*
-cp -r $BUILD_OUTPUT_DIR/*  $BUILD_OUTPUT_TMP_DIR/*
+#rm -rf $BUILD_OUTPUT_TMP_DIR/*
+#cp -r $BUILD_OUTPUT_DIR/*  $BUILD_OUTPUT_TMP_DIR/*
 
-TEMPLATECONF=$BUILD_INPUT_DIR/$PROJECT/meta-$LAYER/custom/ \
+TEMPLATECONF=$BUILD_INPUT_DIR/$PROJECT/meta-$LAYER/conf/templates/ \
     source poky/oe-init-build-env $BUILD_OUTPUT_TMP_DIR \
     && bitbake toezios-image
 
-rm -rf $BUILD_OUTPUT_DIR/*
-cp -r $BUILD_OUTPUT_TMP_DIR/*  $BUILD_OUTPUT_DIR/*
+#rm -rf $BUILD_OUTPUT_DIR/*
+#cp -r $BUILD_OUTPUT_TMP_DIR/*  $BUILD_OUTPUT_DIR/*
 
 
