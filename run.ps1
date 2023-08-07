@@ -5,7 +5,6 @@ mkdir -p $PWD/out -ErrorAction SilentlyContinue
 
 $BUILD_PATH = "E:\build_yocto_docker"
 
-
 docker run -it --rm `
     -v ${BUILD_PATH}:/home/build/output `
     -v $PWD/docker:/home/build/start `

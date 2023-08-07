@@ -37,7 +37,18 @@ ENV LANGUAGE en_US.UTF-8
 RUN apt-get install -y git-lfs && git lfs install
 
 USER build
+
 WORKDIR /home/build
+
+# get google repo
+RUN mkdir -p ~/.bin
+RUN PATH="${HOME}/.bin:${PATH}"
+RUN curl https://storage.googleapis.com/git-repo-downloads/repo > ~/.bin/repo
+RUN chmod a+rx ~/.bin/repo
+
+RUN git config --global user.email "david.schoegler@gmail.com"
+RUN git config --global user.name "David Schoegler"
+
 RUN git clone --recurse-submodules https://github.com/toezi/toeziOS.git
 CMD "/bin/bash"
 
