@@ -11,6 +11,6 @@ docker run -it --rm `
     -v $PWD/docker:/home/build/start `
     -u 30000:30000 `
     toezi-image:latest `
-    bash start/buidl.sh `
+    bash start/build.sh `
     
     
