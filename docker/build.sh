@@ -18,7 +18,7 @@ git pull --recurse-submodules
 
 TEMPLATECONF=$BUILD_INPUT_DIR/$PROJECT/meta-$LAYER/conf/templates/default \
     source poky/oe-init-build-env $BUILD_OUTPUT_TMP_DIR \
-    && bitbake toezios-image
+    && bitbake toezios-image --runall=fetch
     
 #rm -rf $BUILD_OUTPUT_DIR/*
 #cp -r $BUILD_OUTPUT_TMP_DIR/*  $BUILD_OUTPUT_DIR/*
