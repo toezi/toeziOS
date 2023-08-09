@@ -3,7 +3,7 @@ if (-not $?) {throw "Failed to doSomething"}
 
 mkdir -p $PWD/out -ErrorAction SilentlyContinue
 
-$BUILD_PATH = "E:\build_yocto_docker"
+$BUILD_PATH = "C:\yocto"
 
 docker run -it --rm `
     -v ${BUILD_PATH}:/home/build/output `
